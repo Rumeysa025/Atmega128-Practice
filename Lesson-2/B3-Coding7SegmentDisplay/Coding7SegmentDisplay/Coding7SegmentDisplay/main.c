@@ -16,44 +16,43 @@ void wait(int ms) {
 }
 
 const unsigned char NUMBERS[16] = {
-	0b00111111, //1
-	0b00000101, //2
-	0b01011011, //3
-	0b01001111, //4
-	0b01100101, //5
-	0b01111110, //6
+	0b00111111, //0
+	0b00000110, //1
+	0b01011011, //2
+	0b01001111, //3
+	0b01100110, //4
+	0b01101101, //5
+	0b01111101, //6
 	0b00000111, //7
 	0b01111111, //8
 	0b01101111, //9
-	0b01101111, //A
+	0b01110111, //A
 	0b01111100, //B
-	0b00111010, //C
-	0b01011101, //d
-	0b01111010, //E
-	0b01110010, //F
+	0b00111001, //C
+	0b01011110, //D
+	0b01111001, //E
+	0b01110001, //F
 };
 
 int number = 0;
 
 ISR(INT0_vect) {
 	number++;
-	if (PIND & 0x02) {
-		number = 0;
-	}
 }
 
 ISR(INT1_vect) {
 	number--;
-	if(PIND & 0x01) {
-		number = 0;
-	}
+}
+
+ISR(INT2_vect) {
+	number = 0;
 }
 
 int main(void) {
 	DDRB = 0xFF; //Pins PORTB output
 	DDRD = 0x00; //Pins PORTD input
-	EICRA |= 0x0F; //pins 0-1 rising edge
-	EIMSK |= 0x03; //enable pin 0-1
+	EICRA |= 0x3F; 
+	EIMSK |= 0x07; 
 	
 	sei();
 	
@@ -66,7 +65,7 @@ int main(void) {
 		else {
 			PORTB = NUMBERS[14];
 		}
-		wait(10);
+		wait(100);
 	}
 }
 
