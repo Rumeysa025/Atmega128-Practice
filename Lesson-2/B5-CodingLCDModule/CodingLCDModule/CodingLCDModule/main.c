@@ -11,7 +11,7 @@
 
 int main( void ) {
 	// Init I/O
-	DDRD = 0xFF;			// PORTD(7) output, PORTD(6:0) input
+	DDRD = 0xFF;			
 
 	// Init LCD
 	lcd_init();
